@@ -2,6 +2,7 @@ import express from 'express';
 import mongoose from 'mongoose';
 import cors from 'cors';
 import dotenv from 'dotenv';
+import todoRoutes from './routes/todoRoutes.js';
 
 dotenv.config();
 
@@ -17,6 +18,8 @@ app.use(express.json()); // Parse JSON bodies for incoming reque
 mongoose.connect(MONGODB_URI)
   .then(() => console.log('Connected to MongoDB'))
   .catch(err => console.error('MongoDB connection error:', err));
+
+app.use('/api/todos', todoRoutes);
 
  // Basic/home route
 app.get('/', (req, res) => {

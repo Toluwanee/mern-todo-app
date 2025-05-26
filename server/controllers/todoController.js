@@ -1,6 +1,6 @@
 // the logic part
 
-import Todo from '../models/Todo';
+import Todo from '../models/Todo.js';
 
 //Read
 // export is here so that the function can be expoted and used in your routes file.
