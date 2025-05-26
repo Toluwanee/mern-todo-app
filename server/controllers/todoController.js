@@ -62,7 +62,7 @@ export const updateTodo = async (req, res) => {
       const updatedTodo = await Todo.findByIdAndUpdate(
         id,
         { task, completed }, // Fields to update
-        { new: true, runValidators: true } // `new: true` returns the updated document, `runValidators: true` runs schema validators
+        { new: true, runValidators: true } // `new: true` returns the updated document, `runValidators: true` runs and enforces schema validators
       );
   
       if (!updatedTodo) {
@@ -72,6 +72,22 @@ export const updateTodo = async (req, res) => {
       res.status(200).json(updatedTodo);
     } catch (error) {
       res.status(400).json({ message: error.message }); // 400 for validation errors during update
+    }
+  };
+
+// Delete a todo by ID
+export const deleteTodo = async (req, res) => {
+    try {
+      const { id } = req.params;
+      const deletedTodo = await Todo.findByIdAndDelete(id); // Find and delete todo by ID
+  
+      if (!deletedTodo) {
+        return res.status(404).json({ message: 'Todo not found' });
+      }
+  
+      res.status(200).json({ message: 'Todo deleted successfully' });
+    } catch (error) {
+      res.status(500).json({ message: error.message });
     }
   };
   
