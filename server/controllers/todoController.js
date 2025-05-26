@@ -48,5 +48,30 @@ export const getTodoById = async (req, res) => {
     }
   };
 
-
+// Update a todo by ID
+export const updateTodo = async (req, res) => {
+    try {
+      const { id } = req.params;
+      const { task, completed } = req.body;
+  
+      // Optional: Basic validation for update
+      if (task && task.trim().length < 3) {
+          return res.status(400).json({ message: 'Task must be at least 3 characters long.' });
+      }
+  
+      const updatedTodo = await Todo.findByIdAndUpdate(
+        id,
+        { task, completed }, // Fields to update
+        { new: true, runValidators: true } // `new: true` returns the updated document, `runValidators: true` runs schema validators
+      );
+  
+      if (!updatedTodo) {
+        return res.status(404).json({ message: 'Todo not found' });
+      }
+  
+      res.status(200).json(updatedTodo);
+    } catch (error) {
+      res.status(400).json({ message: error.message }); // 400 for validation errors during update
+    }
+  };
   
