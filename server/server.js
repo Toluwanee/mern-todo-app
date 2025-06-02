@@ -19,6 +19,7 @@ mongoose.connect(MONGODB_URI)
   .then(() => console.log('Connected to MongoDB'))
   .catch(err => console.error('MongoDB connection error:', err));
 
+  // did this after routing through the controller.
 app.use('/api/todos', todoRoutes);
 
  // Basic/home route
